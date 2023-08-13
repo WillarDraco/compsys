@@ -57,9 +57,9 @@ CHIP ALU {
         Not16(in=fo, out=nfo); //no
         Mux16(a=fo, b=nfo, sel=no, out=out);
 
-        ng = out[15];
-
         Or8Way(in=out[0...7], out=zr1);
         Or8Way(in=out[8...15], out=zr2);
-        Or(a=zr1, b=zr2, out=zr);
+        Or(a=zr1, b=zr2, out=nzr);
+
+        Not(in=nzr, out=zr);
 }
