@@ -44,7 +44,7 @@ CHIP CPU {
 
         ARegister(in=inA, load=loadA, out=outA, out[0..14]=addressM);
         DRegister(in=outALU, load=loadD, out=outD);
-        PC(in=outA, load=loadPC, inc=true, reset=reset, out[0..14]=pc);
+        PC(in=outA, load=loadPC, inc=true, reset=reset, out[0..14]=p);
 
         Mux16(a=outALU, b=instruction, sel=instA, out=inA);
         Mux16(a=outA, b=inM, sel=AMtoALU, out=outAM);
@@ -56,27 +56,16 @@ CHIP CPU {
         And(a=instC, b=instruction[5], out=destA);
         Or(a=instA, b=destA, out=loadA);
         And(a=instC, b=instruction[12], out=AMtoALU);
-        And(a=instC, b=instruction[3], out=loadM, out=writeM);
+        And(a=loadA, b=instruction[3], out=loadM, out=writeM);
 
         //Jump
         Or(a=zr, b=ng, out=nALU);
         Not(in=nALU, out=pos);
 
-        And(a=instruction[2], b=ng, out=JLT);
-        And(a=instruction[1], b=zr, out=JEQ);
-        And(a=instruction[0], b=pos, out=JGT);
+        And(a=j1, b=ng, out=jumpj1);
+        And(a=j2, b=zr, out=jumpj2);
+        And(a=j3, b=pos, out=jumpj3);
 
-        Or(a=JLT, b=JEQ, out=JGE);
-        Or(a=JGT, b=JLT, out=JNE);
-        Or(a=JEQ, b=JLT, out=JLE);
-        Or(a=JGT, b=JLE, out=JMP);
-
-        Or(a=JGT, b=JEQ, out=j1);
-        Or(a=JLT, b=j1, out=j2);
-        Or(a=JGE, b=j2, out=j3);
-        Or(a=JNE, b=j3, out=j4);
-        Or(a=JLE, b=j4, out=j5);
-        Or(a=JMP, b=j5, out=j6);
-        
-        And(a=instC, b=j6, out=loadPC);
+        Or(a=jumpj1, b=jumpj2, out=orJ);
+        Or(a=jumpj3, b=orJ, out=loadPC);
 }
