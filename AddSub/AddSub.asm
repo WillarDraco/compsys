@@ -8,6 +8,6 @@ D = M
 @R2
 D = M + D
 @R3
-D = M - D
+D = D - M
 @R0
 M = D
