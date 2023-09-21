@@ -40,11 +40,10 @@ D;JEQ
 @ptr
 A = M
 D = M
-@R0
-D = D - M
-
-@LOOP
+@ELEM_POS
 D;JGE
+@ELEM_NEG
+0;JMP
 
 //New Min
 (NEWMIN)
@@ -65,7 +64,34 @@ M = M + 1
 @MIN
 0;JMP
 
+(R0_NEG)
 
+(R0_POS)
+@ptr
+A = M
+D = M
+@R0
+D = D - M
+@LOOP
+D;JGE
+@NEWMIN
+0;JMP
+
+(ELEM_NEG)
+@R0
+D = M
+@R0_NEG
+D;JLT
+@LOOP
+0;JMP
+
+(ELEM_POS)
+@R0
+D = M
+@R0_POS
+D;JGE
+@LOOP
+0;JMP
 
 (END)
 @END
