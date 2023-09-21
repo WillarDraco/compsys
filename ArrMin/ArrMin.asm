@@ -52,8 +52,6 @@ A = M
 D = M
 @R0
 M = D
-@LOOP
-0;JMP
 
 //Iterate the loop
 (LOOP)
@@ -65,6 +63,15 @@ M = M + 1
 0;JMP
 
 (R0_NEG)
+@ptr
+A = M
+D = M
+@R0
+D = D - M
+@LOOP
+D;JGE
+@NEWMIN
+0;JMP
 
 (R0_POS)
 @ptr
