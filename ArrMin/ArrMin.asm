@@ -62,22 +62,13 @@ M = M + 1
 @MIN
 0;JMP
 
-(R0_NEG)
+(REF_NEG)
+(REF_POS)
 @ptr
 A = M
 D = M
 @R0
-D = D - M
-@LOOP
-D;JGE
-@NEWMIN
-0;JMP
-
-(R0_POS)
-@ptr
 A = M
-D = M
-@R0
 D = D - M
 @LOOP
 D;JGE
@@ -87,7 +78,7 @@ D;JGE
 (ELEM_NEG)
 @R0
 D = M
-@R0_NEG
+@REF_NEG
 D;JLT
 @LOOP
 0;JMP
@@ -95,7 +86,7 @@ D;JLT
 (ELEM_POS)
 @R0
 D = M
-@R0_POS
+@REF_POS
 D;JGE
 @LOOP
 0;JMP
