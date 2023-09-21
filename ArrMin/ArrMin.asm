@@ -68,7 +68,6 @@ M = M + 1
 A = M
 D = M
 @R0
-A = M
 D = D - M
 @LOOP
 D;JGE
