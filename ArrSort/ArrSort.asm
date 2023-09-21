@@ -3,8 +3,12 @@
 
 @R1
 D = M - 1
+@last //adress of the last element
+M = D
 @R2
-M = M + D
+D = M
+@last
+M = D + M
 
 // Check array length if 0 end
 @R2
@@ -17,7 +21,7 @@ D;JLE
 	(CHECKOUT)
 	@R1
 	D = M
-	@R2
+	@last
 	D = D - M
 	@END
 	D;JGT
@@ -31,7 +35,7 @@ D;JLE
 (CHECKINNER)
 	@R3
 	D = M
-	@R2
+	@last
 	D = D - M
 	@INNERFIN
 	D;JGT
@@ -85,7 +89,7 @@ D;JLE
 	@R1
 	A = M
 	D = D - M
-	@LOOP
+	@INLOOP
 	D;JGE
 	@SWAP
 	0;JMP
@@ -96,7 +100,7 @@ D;JLE
 	D = M
 	@REF_NEG
 	D;JLT
-	@LOOP
+	@INLOOP
 	0;JMP
 
 (ELEM_POS)
@@ -105,7 +109,7 @@ D;JLE
 	D = M
 	@REF_POS
 	D;JGE
-	@LOOP
+	@INLOOP
 	0;JMP
 
 (END)
