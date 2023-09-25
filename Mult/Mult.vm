@@ -3,8 +3,32 @@
 // x & y are static variables
 
 // Put your code here.
+push static 0
+pop static 2
 
+push constant 0
+pop local 0
 
+label LOOP
+    push static 2
+    push constant 0
+    eq
+    if-goto POST
+    push local 0
+    push static 1
+    add
+    pop local 0
+
+    push static 2
+    push constant 1
+    sub
+    pop static 2
+    
+goto LOOP
+
+label POST
+    push local 0
+    pop local 0
 
 label END
 goto END
