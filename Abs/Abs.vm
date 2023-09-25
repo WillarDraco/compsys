@@ -2,8 +2,15 @@
 // x & y are static variables
 
 // Put your code here.
+push static 0
+push constant 0
+gt
+if-goto greaterThan
+push static 0
+neg
 
-
+label greaterThan
+pop static 1
 
 label END
 goto END

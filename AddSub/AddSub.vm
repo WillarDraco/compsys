@@ -3,7 +3,12 @@
 // x is a static variable
 
 // Put your code here.
-
+push local 0
+push local 1
+add
+push static 0
+sub
+pop static 0
 
 
 label END
