@@ -3,12 +3,10 @@
 
 @R1
 D = M - 1
-@last //adress of the last element
-M = D
 @R2
-D = M
+D = M + D
 @last
-M = D + M
+M = D
 
 // Check array length if 0 end
 @R2
@@ -18,7 +16,6 @@ D;JLE
 
 
 (OUTER)
-	(CHECKOUT)
 	@R1
 	D = M
 	@last
@@ -32,7 +29,6 @@ D;JLE
 	M = D + 1
 
 (INNER)
-(CHECKINNER)
 	@R3
 	D = M
 	@last
@@ -47,6 +43,8 @@ D;JLE
 	D;JGE
 	@ELEM_NEG
 	0;JMP
+
+
 
 //Swaps elements
 (SWAP)
