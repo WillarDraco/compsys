@@ -39,20 +39,20 @@ D;JLE
 	@R3 //inner index
 	A = M
 	D = M //dereferenced value
-	@look // Look at value
-	M = D
 	@ELEM_POS
-	M;JGE
+	D;JGE
 	@ELEM_NEG
 	0;JMP
 
 //Swaps elements
 (SWAP)
-	@compare
+	@R1
+	A = M
 	D = M
 	@temp
 	M = D
-	@look
+	@R3
+	A = M
 	D = M
 	@R1
 	A = M
@@ -78,9 +78,11 @@ D;JLE
 	0;JMP
 
 (DOUBLE)
-	@look
+	@R3
+	A = M
 	D = M
-	@compare
+	@R1
+	A = M
 	D = D - M
 	@INLOOP
 	D;JGE
@@ -91,10 +93,8 @@ D;JLE
 	@R1
 	A = M
 	D = M
-	@compare // Check value
-	M = D
 	@DOUBLE
-	M;JLT
+	D;JLT
 	@SWAP
 	0;JMP
 
@@ -102,10 +102,8 @@ D;JLE
 	@R1
 	A = M
 	D = M
-	@compare // Check value
-	M = D
 	@DOUBLE
-	M;JGE
+	D;JGE
 	@INLOOP
 	0;JMP
 
