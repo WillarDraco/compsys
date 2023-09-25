@@ -7,7 +7,7 @@ push constant 0
 lt
 if-goto NEG
 push static 0
-goto push
+goto PUSH
 
 label NEG
 push static 0
