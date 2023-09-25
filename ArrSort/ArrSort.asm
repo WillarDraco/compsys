@@ -81,8 +81,7 @@ D;JLE
 	@OUTER
 	0;JMP
 
-(REF_NEG)
-(REF_POS)
+(DOUBLE)
 	@R3
 	A = M
 	D = M
@@ -98,16 +97,16 @@ D;JLE
 	@R1
 	A = M
 	D = M
-	@REF_NEG
+	@DOUBLE
 	D;JLT
-	@INLOOP
+	@SWAP
 	0;JMP
 
 (ELEM_POS)
 	@R1
 	A = M
 	D = M
-	@REF_POS
+	@DOUBLE
 	D;JGE
 	@INLOOP
 	0;JMP
