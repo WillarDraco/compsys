@@ -4,15 +4,19 @@
 // Put your code here.
 push static 0
 push constant 0
-gt
-if-goto greaterThan
+lt
+if-goto NEG
+push static 0
+goto push
+
+label NEG
 push static 0
 neg
-pop static 1
+goto PUSH
 
-label greaterThan
-push static 0
+label PUSH
 pop static 1
+goto END
 
 label END
 goto END
