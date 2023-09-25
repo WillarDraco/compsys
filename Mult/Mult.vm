@@ -7,13 +7,47 @@ push static 0
 pop static 2
 
 push constant 0
-pop local 0
+pop static 5
 
-label LOOP
+//Negative Check x
+push static 0
+push constant 0
+lt
+if-goto NEGX
+
+//Negative Check y
+label CHECKY
+    push static 1
+    push constant 0
+    lt
+    if-goto NEGY
+
+//Negate x
+label NEGX
+    push static 0
+    neg
+    pop static 0 //Positive x
+    push static 5 //Negative counter
+    push constant 1
+    add
+    pop static 5
+    goto CHECKY
+
+label NEGY
+    push static 1
+    neg
+    pop static 1 //Positive y
+    push static 5 //Negative counter
+    push constant 1
+    add
+    pop static 5
+    goto ADDPOS
+
+label ADDPOS
     push static 2
     push constant 0
     eq
-    if-goto POST
+    if-goto NEGCHECK
     push local 0
     push static 1
     add
@@ -24,7 +58,24 @@ label LOOP
     sub
     pop static 2
     
-goto LOOP
+goto ADDPOS
+
+label NEGCHECK
+    push static 5
+    push constant 0
+    eq
+    if-goto POST
+
+    push local 0
+    neg
+    pop local 0
+
+    push static 5
+    push constant 1
+    sub
+    pop static 5
+
+    goto NEGCHECK
 
 label POST
     push local 0
