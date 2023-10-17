@@ -2,12 +2,7 @@
 // a is a local variable
 // x & y are static variables
 
-// Put your code here.
-push static 0
-pop static 2
-
-push constant 0
-pop static 5
+// Put your code here
 
 //Negative Check x
 push static 0
