@@ -2,20 +2,24 @@
 // a is a local variable
 // x & y are static variables
 
-// Put your code here
+// Put your code here.
+push constant 0
+pop static 5
 
 //Negative Check x
-push static 0
+push static 0 // x
 push constant 0
 lt
 if-goto NEGX
+goto CHECKY
 
 //Negative Check y
 label CHECKY
-    push static 1
-    push constant 0
+    push static 1 // y
+    push constant 0 
     lt
     if-goto NEGY
+goto BIGGER
 
 //Negate x
 label NEGX
@@ -26,7 +30,7 @@ label NEGX
     push constant 1
     add
     pop static 5
-    goto CHECKY
+goto CHECKY
 
 label NEGY
     push static 1
@@ -36,24 +40,60 @@ label NEGY
     push constant 1
     add
     pop static 5
-    goto ADDPOS
+goto BIGGER
 
-label ADDPOS
-    push static 2
+label BIGGER
+    push static 0
+    push static 1
+    gt
+    if-goto BIG
+goto SMALL
+
+label BIG
+    push static 1
+    pop static 10 // Big counter
+goto ADDPOSB
+
+label SMALL
+    push static 0
+    pop static 10 // Small counter
+goto ADDPOSS
+
+label ADDPOSB
+    push static 10
     push constant 0
     eq
     if-goto NEGCHECK
-    push local 0
-    push static 1
-    add
-    pop local 0
 
-    push static 2
+    push static 8
+    push static 0
+    add
+    pop static 8
+
+    push static 10
     push constant 1
     sub
-    pop static 2
-    
-goto ADDPOS
+    pop static 10
+
+goto ADDPOSB
+
+label ADDPOSS
+    push static 10
+    push constant 0
+    eq
+    if-goto NEGCHECK
+
+    push static 8
+    push static 1
+    add
+    pop static 8
+
+    push static 10
+    push constant 1
+    sub
+    pop static 10
+
+goto ADDPOSS
 
 label NEGCHECK
     push static 5
@@ -70,10 +110,10 @@ label NEGCHECK
     sub
     pop static 5
 
-    goto NEGCHECK
+goto NEGCHECK
 
 label POST
-    push local 0
+    push static 8
     pop local 0
 
 label END
