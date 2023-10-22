@@ -104,12 +104,14 @@ string VMTranslator::vm_pop(string segment, int offset){
     } else if(segment == "constant") {
         reg = to_string(offset);
     } else {
-        reg = "";
+        return = "";
     }
 
     if (segment == "constant") {
         return "";
     }
+
+    translation.append("@" + reg + "\n");
 
     if (segment == "static" || segment == "pointer" || segment == "temp") {
         translation.append("D=A\n");
