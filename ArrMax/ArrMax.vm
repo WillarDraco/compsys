@@ -3,4 +3,62 @@
 
 // Put your code here.
 
-ArrMax.arrMax(m,n)
+function ArrMax.arrMax 2
+
+push argument 1
+push constant 1
+lt
+if-goto EMPTY
+
+push argument 0
+pop pointer 1 //sets pointer
+
+push that 0
+pop temp 0 // first element = max
+
+push constant 0
+pop temp 1 //Counter
+
+push argument 1
+push constant 1
+sub
+pop temp 2 // End of array value
+goto LOOP
+
+label LOOP
+    push temp 1
+    push constant 1
+    add
+    pop temp 1 // + 1 Counter
+
+    push temp 1
+    push temp 2
+    gt
+    if-goto POST
+
+    push argument 0
+    push temp 1
+    add
+    pop pointer 1
+    push that 0 //dereferanced value
+    pop temp 3  //current value being checked
+
+    push temp 3
+    push temp 0
+    gt
+    if-goto NEWMAX
+goto LOOP
+
+label NEWMAX
+    push temp 3
+    pop temp 0
+goto LOOP
+
+
+label POST
+    push temp 0
+return
+
+label EMPTY
+    push constant 0
+return
