@@ -21,40 +21,34 @@ VMTranslator::~VMTranslator() {
 /** Generate Hack Assembly code for a VM push operation */
 string VMTranslator::vm_push(string segment, int offset){
     string translation;
-    string reg = "";
+    string reg;
     string ofs = to_string(offset);
 
     if (segment == "this") {
         reg = "THIS";
-    }
-
-    if(segment == "that") {
+    } else if(segment == "that") {
         reg = "THAT";
-    }
-    if(segment == "argument") {
-        reg = "ARG";
-    }
-    
-    if(segment == "local") {
-        reg = "LCL";
-    }
-    
-    if (segment == "static") {
-        reg = to_string(16 + offset);
-    }
-    
-    if(segment == "pointer") {
-        reg = "R" + to_string(3 + offset);
-    }
-    
-    if (segment == "temp") {
-        reg = "R" + to_string(5 + offset);
-    }
 
-    if(segment == "constant") {
+    } else if(segment == "argument") {
+        reg = "ARG";
+
+    } else if(segment == "local") {
+        reg = "LCL";
+
+    } else if(segment == "static") {
+        reg = to_string(16 + offset);
+
+    } else if(segment == "pointer") {
+        reg = "R" + to_string(3 + offset);
+
+    } else if(segment == "temp") {
+        reg = "R" + to_string(5 + offset);
+
+    } else if(segment == "constant") {
         reg = to_string(offset);
+    } else {
+        return "";
     }
-    
 
     if (segment == "constant" || segment == "static" || segment == "pointer" || segment == "temp") {
         translation.append("@" + reg + "\n");
