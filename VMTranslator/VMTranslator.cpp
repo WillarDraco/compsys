@@ -236,7 +236,7 @@ string VMTranslator::vm_lt(){
 
     translation.append("D=M-D\n");
     translation.append("@LESS");
-    translation.append("D;JLT\n");
+    translation.append("D;JLE\n");
 
     translation.append("@SP\n");
     translation.append("A=M-1\n");
