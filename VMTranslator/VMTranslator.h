@@ -5,14 +5,13 @@
 
 using namespace std;
 
-class VMTranslator {
-
+class VMTranslator { 
     public:
 
         VMTranslator();
         ~VMTranslator();
 
-        static string regDecode(string segment, int offset);
+
         static string vm_push(string segment, int offset);
         static string vm_pop(string segment, int offset);
 

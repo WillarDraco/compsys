@@ -18,38 +18,37 @@ VMTranslator::~VMTranslator() {
     // Your code here
 }
 
-string regDecode(string segment, int offset) {
-    if (segment == "this") {
-        return "THIS";
-    } else if(segment == "that") {
-        return "THAT";
-
-    } else if(segment == "argument") {
-        return "ARG";
-
-    } else if(segment == "local") {
-        return "LCL";
-
-    } else if(segment == "static") {
-        return to_string(16 + offset);
-
-    } else if(segment == "pointer") {
-        return "R" + to_string(3 + offset);
-
-    } else if(segment == "temp") {
-        return "R" + to_string(5 + offset);
-
-    } else if(segment == "constant") {
-        return to_string(offset);
-    } else {
-        return "";
-    }
-}
-
 /** Generate Hack Assembly code for a VM push operation */
 string VMTranslator::vm_push(string segment, int offset){
     string translation;
-    string reg = regDecode(segment, offset);
+    string reg;
+
+    if (segment == "this") {
+        reg = "THIS";
+    } else if(segment == "that") {
+        reg = "THAT";
+
+    } else if(segment == "argument") {
+        reg = "ARG";
+
+    } else if(segment == "local") {
+        reg = "LCL";
+
+    } else if(segment == "static") {
+        reg = to_string(16 + offset);
+
+    } else if(segment == "pointer") {
+        reg = "R" + to_string(3 + offset);
+
+    } else if(segment == "temp") {
+        reg = "R" + to_string(5 + offset);
+
+    } else if(segment == "constant") {
+        reg = to_string(offset);
+    } else {
+        reg = "";
+    }
+
     string ofs = to_string(offset);
 
     if (segment == "constant" || segment == "static" || segment == "pointer" || segment == "temp") {
@@ -77,7 +76,34 @@ string VMTranslator::vm_push(string segment, int offset){
 /** Generate Hack Assembly code for a VM pop operation */
 string VMTranslator::vm_pop(string segment, int offset){    
     string translation;
-    string reg = regDecode(segment, offset);
+    string reg;
+
+    if (segment == "this") {
+        reg = "THIS";
+    } else if(segment == "that") {
+        reg = "THAT";
+
+    } else if(segment == "argument") {
+        reg = "ARG";
+
+    } else if(segment == "local") {
+        reg = "LCL";
+
+    } else if(segment == "static") {
+        reg = to_string(16 + offset);
+
+    } else if(segment == "pointer") {
+        reg = "R" + to_string(3 + offset);
+
+    } else if(segment == "temp") {
+        reg = "R" + to_string(5 + offset);
+
+    } else if(segment == "constant") {
+        reg = to_string(offset);
+    } else {
+        reg = "";
+    }
+
     string ofs = to_string(offset);
 
     if (segment == "constant") {
