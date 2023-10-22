@@ -183,7 +183,7 @@ string VMTranslator::vm_eq(){
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=0\n");
-    translation.append("@NOT\n");
+    translation.append("@END\n");
     translation.append("0;JMP\n");
 
     translation.append("(EQUAL)\n");
@@ -191,7 +191,7 @@ string VMTranslator::vm_eq(){
     translation.append("A=M-1\n");
     translation.append("M=-1\n");
 
-    translation.append("(NOT)\n");
+    translation.append("(END)\n");
 
     return translation;
 }
@@ -212,7 +212,7 @@ string VMTranslator::vm_gt(){
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=0\n");
-    translation.append("@NOT\n");
+    translation.append("@END\n");
     translation.append("0;JMP\n");
 
     translation.append("(GREATER)\n");
@@ -220,7 +220,7 @@ string VMTranslator::vm_gt(){
     translation.append("A=M-1\n");
     translation.append("M=-1\n");
 
-    translation.append("(NOT)\n");
+    translation.append("(END)\n");
 
     return translation;
 }
@@ -241,7 +241,7 @@ string VMTranslator::vm_lt(){
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=0\n");
-    translation.append("@NOT");
+    translation.append("@END");
     translation.append("0;JMP\n");
 
     translation.append("(LESS)");
@@ -249,7 +249,7 @@ string VMTranslator::vm_lt(){
     translation.append("A=M-1\n");
     translation.append("M=-1\n");
 
-    translation.append("(NOT)\n");
+    translation.append("(END)\n");
 
     return translation;
 }
