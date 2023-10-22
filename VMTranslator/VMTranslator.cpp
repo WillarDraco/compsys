@@ -235,16 +235,16 @@ string VMTranslator::vm_lt(){
     translation.append("A=A-1\n");
 
     translation.append("D=M-D\n");
-    translation.append("@LESS");
+    translation.append("@LESS\n");
     translation.append("D;JLE\n");
 
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=0\n");
-    translation.append("@END");
+    translation.append("@END\n");
     translation.append("0;JMP\n");
 
-    translation.append("(LESS)");
+    translation.append("(LESS)\n");
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=-1\n");
