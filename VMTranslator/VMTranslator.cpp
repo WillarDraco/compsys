@@ -59,7 +59,7 @@ string VMTranslator::vm_push(string segment, int offset){
             translation.append("D=M\n");
         }
     } else if (segment == "local" || segment == "this" || segment == "that" || segment == "argument") {
-        translation.append("@" + reg);
+        translation.append("@" + reg + "\n");
         translation.append("D=M\n");
         translation.append("@" + ofs + "\n");
         translation.append("A=D+A\n");
