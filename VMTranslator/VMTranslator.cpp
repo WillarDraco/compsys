@@ -66,7 +66,7 @@ string VMTranslator::vm_push(string segment, int offset){
     translation.append("A=M\n");
     translation.append("M=D\n");
     translation.append("@SP\n");
-    translation.append("M=M+1");
+    translation.append("M=M+1\n");
 
     return translation;
 }
@@ -122,7 +122,7 @@ string VMTranslator::vm_pop(string segment, int offset){
     translation.append("D=M\n");
     translation.append("@R13\n");
     translation.append("A=M\n");
-    translation.append("M=D");
+    translation.append("M=D\n");
 
     return translation;
 }
@@ -177,21 +177,21 @@ string VMTranslator::vm_eq(){
     translation.append("A=A-1\n");
 
     translation.append("D=M-D\n");
-    translation.append("@EQUAL");
+    translation.append("@EQUAL\n");
     translation.append("D;JEQ\n");
 
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=0\n");
-    translation.append("@NOT");
+    translation.append("@NOT\n");
     translation.append("0;JMP\n");
 
-    translation.append("(EQUAL)");
+    translation.append("(EQUAL)\n");
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=-1\n");
 
-    translation.append("(NOT)");
+    translation.append("(NOT)\n");
 
     return translation;
 }
@@ -206,21 +206,21 @@ string VMTranslator::vm_gt(){
     translation.append("A=A-1\n");
 
     translation.append("D=M-D\n");
-    translation.append("@GREATER");
+    translation.append("@GREATER\n");
     translation.append("D;JGT\n");
 
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=0\n");
-    translation.append("@NOT");
+    translation.append("@NOT\n");
     translation.append("0;JMP\n");
 
-    translation.append("(GREATER)");
+    translation.append("(GREATER)\n");
     translation.append("@SP\n");
     translation.append("A=M-1\n");
     translation.append("M=-1\n");
 
-    translation.append("(NOT)");
+    translation.append("(NOT)\n");
 
     return translation;
 }
@@ -249,7 +249,7 @@ string VMTranslator::vm_lt(){
     translation.append("A=M-1\n");
     translation.append("M=-1\n");
 
-    translation.append("(NOT)");
+    translation.append("(NOT)\n");
 
     return translation;
 }
@@ -262,7 +262,7 @@ string VMTranslator::vm_and(){
     translation.append("A=M-1\n");
     translation.append("D=M\n");
     translation.append("A=A-1\n");
-    translation.append("M=M&D");
+    translation.append("M=M&D\n");
 
     return translation;
 }
@@ -275,7 +275,7 @@ string VMTranslator::vm_or(){
     translation.append("A=M-1\n");
     translation.append("D=M\n");
     translation.append("A=A-1\n");
-    translation.append("M=M|D");
+    translation.append("M=M|D\n");
 
     return translation;
 }
