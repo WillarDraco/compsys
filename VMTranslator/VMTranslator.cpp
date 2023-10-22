@@ -172,7 +172,7 @@ string VMTranslator::vm_eq(){
     string translation;
     
     translation.append("@SP\n");
-    translation.append("A=M-1\n");
+    translation.append("AM=M-1\n");
     translation.append("D=M\n");
     translation.append("A=A-1\n");
 
@@ -201,7 +201,7 @@ string VMTranslator::vm_gt(){
     string translation;
     
     translation.append("@SP\n");
-    translation.append("A=M-1\n");
+    translation.append("AM=M-1\n");
     translation.append("D=M\n");
     translation.append("A=A-1\n");
 
@@ -230,7 +230,7 @@ string VMTranslator::vm_lt(){
     string translation;
     
     translation.append("@SP\n");
-    translation.append("A=M-1\n");
+    translation.append("AM=M-1\n");
     translation.append("D=M\n");
     translation.append("A=A-1\n");
 
@@ -259,7 +259,7 @@ string VMTranslator::vm_and(){
     string translation;
     
     translation.append("@SP\n");
-    translation.append("A=M-1\n");
+    translation.append("AM=M-1\n");
     translation.append("D=M\n");
     translation.append("A=A-1\n");
     translation.append("M=M&D\n");
@@ -272,7 +272,7 @@ string VMTranslator::vm_or(){
     string translation;
     
     translation.append("@SP\n");
-    translation.append("A=M-1\n");
+    translation.append("AM=M-1\n");
     translation.append("D=M\n");
     translation.append("A=A-1\n");
     translation.append("M=M|D\n");
