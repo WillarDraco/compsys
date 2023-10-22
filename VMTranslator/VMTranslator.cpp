@@ -68,7 +68,7 @@ string VMTranslator::vm_push(string segment, int offset){
     translation.append("A=M\n");
     translation.append("M=D\n");
     translation.append("@SP\n");
-    translation.append("M=M+1\n");
+    translation.append("M=M+1");
 
     return translation;
 }
@@ -125,7 +125,7 @@ string VMTranslator::vm_pop(string segment, int offset){
     translation.append("D=M\n");
     translation.append("@R13\n");
     translation.append("A=M\n");
-    translation.append("M=D\n");
+    translation.append("M=D");
 
     return translation;
 }
