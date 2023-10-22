@@ -22,6 +22,7 @@ VMTranslator::~VMTranslator() {
 string VMTranslator::vm_push(string segment, int offset){
     string translation;
     string reg;
+    string ofs = to_string(offset);
 
     if (segment == "this") {
         reg = "THIS";
@@ -49,15 +50,12 @@ string VMTranslator::vm_push(string segment, int offset){
         reg = "";
     }
 
-    string ofs = to_string(offset);
-
     if (segment == "constant" || segment == "static" || segment == "pointer" || segment == "temp") {
         translation.append("@" + reg + "\n");
         translation.append("push " + segment + " " + ofs + "\n");
         (segment == "constant") ? translation.append("D=A\n") : translation.append("D=M\n");
     } else if (segment == "local" || segment == "this" || segment == "that" || segment == "argument") {
         translation.append("@" + reg);
-        translation.append("push " + segment + " " + ofs + "\n");
         translation.append("D=M\n");
         translation.append("@" + ofs + "\n");
         translation.append("A=D+A\n");
@@ -77,6 +75,7 @@ string VMTranslator::vm_push(string segment, int offset){
 string VMTranslator::vm_pop(string segment, int offset){    
     string translation;
     string reg;
+    string ofs = to_string(offset);
 
     if (segment == "this") {
         reg = "THIS";
@@ -103,8 +102,6 @@ string VMTranslator::vm_pop(string segment, int offset){
     } else {
         reg = "";
     }
-
-    string ofs = to_string(offset);
 
     if (segment == "constant") {
         return "";
@@ -132,17 +129,42 @@ string VMTranslator::vm_pop(string segment, int offset){
 
 /** Generate Hack Assembly code for a VM add operation */
 string VMTranslator::vm_add(){
-    return "";
+    string translation;
+    
+    translation.append("@SP\n");
+    translation.append("AM=M-1\n");
+    translation.append("D=M\n");
+    translation.append("A=A-1\n");
+
+    translation.append("M=M+D");
+
+    return translation;
 }
 
 /** Generate Hack Assembly code for a VM sub operation */
 string VMTranslator::vm_sub(){
-    return "";
+    string translation;
+    
+    translation.append("@SP\n");
+    translation.append("AM=M-1\n");
+    translation.append("D=M\n");
+    translation.append("A=A-1\n");
+
+    translation.append("M=M-D");
+
+    return translation;
 }
 
 /** Generate Hack Assembly code for a VM neg operation */
 string VMTranslator::vm_neg(){
-    return "";
+    string translation;
+    
+    translation.append("@SP\n");
+    translation.append("A=M-1\n");
+    
+    translation.append("M=-M\n");
+
+    return translation;
 }
 
 /** Generate Hack Assembly code for a VM eq operation */
