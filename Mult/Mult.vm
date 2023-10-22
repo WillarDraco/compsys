@@ -1,0 +1,125 @@
+// Calculates a = x*y
+// a is a local variable
+// x & y are static variables
+
+// Put your code here.
+push constant 0
+pop static 5
+
+push static 0
+pop static 11 //X
+push static 1
+pop static 12 //Y
+
+//Negative Check x
+push static 0 // x
+push constant 0
+lt
+if-goto NEGX
+goto CHECKY
+
+//Negative Check y
+label CHECKY
+    push static 1 // y
+    push constant 0 
+    lt
+    if-goto NEGY
+goto BIGGER
+
+//Negate x
+label NEGX
+    push static 0
+    neg
+    pop static 11 //Positive x
+    push static 5 //Negative counter
+    push constant 1
+    add
+    pop static 5
+goto CHECKY
+
+label NEGY
+    push static 1
+    neg
+    pop static 12 //Positive y
+    push static 5 //Negative counter
+    push constant 1
+    add
+    pop static 5
+goto BIGGER
+
+label BIGGER
+    push static 11
+    push static 1
+    gt
+    if-goto BIG
+goto SMALL
+
+label BIG
+    push static 12
+    pop static 10 // Big counter
+goto ADDPOSB
+
+label SMALL
+    push static 11
+    pop static 10 // Small counter
+goto ADDPOSS
+
+label ADDPOSB
+    push static 10
+    push constant 0
+    eq
+    if-goto NEGCHECK
+
+    push static 8
+    push static 11
+    add
+    pop static 8
+
+    push static 10
+    push constant 1
+    sub
+    pop static 10
+
+goto ADDPOSB
+
+label ADDPOSS
+    push static 10
+    push constant 0
+    eq
+    if-goto NEGCHECK
+
+    push static 8
+    push static 12
+    add
+    pop static 8
+
+    push static 10
+    push constant 1
+    sub
+    pop static 10
+
+goto ADDPOSS
+
+label NEGCHECK
+    push static 5
+    push constant 0
+    eq
+    if-goto POST
+
+    push static 8
+    neg
+    pop static 8
+
+    push static 5
+    push constant 1
+    sub
+    pop static 5
+
+goto NEGCHECK
+
+label POST
+    push static 8
+    pop local 0
+
+label END
+goto END
