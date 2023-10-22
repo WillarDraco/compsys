@@ -47,7 +47,7 @@ string VMTranslator::vm_push(string segment, int offset){
     } else if(segment == "constant") {
         reg = to_string(offset);
     } else {
-        return segment;
+        translation = "";
     }
 
     if (segment == "constant" || segment == "static" || segment == "pointer" || segment == "temp") {
