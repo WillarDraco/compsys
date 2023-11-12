@@ -183,14 +183,14 @@ ParseTree* CompilerParser::compileParameterList() {
         }
 
         if (a != nullptr) {
-            return false;
-        }
-
-        if (a->getType() == "symbol") {
-            if (a->getValue() == ")") {
-                return true;
+            if (a->getType() == "symbol") {
+                if (a->getValue() == ")") {
+                    return true;
+                }
             }
         }
+
+        
         return false;
     };
 
