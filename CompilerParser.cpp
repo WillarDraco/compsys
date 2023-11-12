@@ -191,7 +191,7 @@ ParseTree* CompilerParser::compileParameterList() {
     };
 
     Token *currentValue = current();
-    while (!isBracket(currentValue)) {
+    while (currentValue != nullptr && !isBracket(currentValue)) {
         tree->addChild(current());
         next();
         currentValue = current();
