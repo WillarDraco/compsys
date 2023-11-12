@@ -175,30 +175,29 @@ ParseTree* CompilerParser::compileSubroutine() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileParameterList() {
-    // ParseTree *tree = new ParseTree("parameterList", "");
+    ParseTree *tree = new ParseTree("parameterList", "");
 
-    // auto isBracket = [](ParseTree* a) {
-    //     if (a == nullptr) {
-    //         return false;
-    //     }
+    auto isBracket = [](ParseTree* a) {
+        if (a == nullptr) {
+            return false;
+        }
 
-    //     if (a->getType() == "symbol") {
-    //         if (a->getValue() == ")") {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // };
+        if (a->getType() == "symbol") {
+            if (a->getValue() == ")") {
+                return true;
+            }
+        }
+        return false;
+    };
 
-    // Token *currentValue = current();
-    // while (currentValue != nullptr && !isBracket(currentValue)) {
-    //     tree->addChild(current());
-    //     next();
-    //     currentValue = current();
-    // }
+    Token *currentValue = current();
+    while (it != tlist.end() && !isBracket(currentValue)) {
+        tree->addChild(current());
+        next();
+        currentValue = current();
+    }
 
-    // return tree;
-    return NULL;
+    return tree;
 }
 
 
