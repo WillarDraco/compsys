@@ -43,7 +43,7 @@ ParseTree* CompilerParser::compileClass() {
     tree->addChild(current());
     next();
 
-    auto is_varDec = [](ParseTree* a) {
+    auto is_varDec = [](Token* a) {
         if (a->getType() == "keyword") {
             if (a->getValue() == "static" || "field") {
                 return true;
@@ -52,7 +52,7 @@ ParseTree* CompilerParser::compileClass() {
         return false;
     };
 
-    auto is_subRoutine = [](ParseTree* a) {
+    auto is_subRoutine = [](Token* a) {
         if (a->getType() == "keyword") {
             if (a->getValue() == "function" || "method" || "constructor") {
                 return true;
