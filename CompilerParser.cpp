@@ -43,7 +43,7 @@ ParseTree* CompilerParser::compileClass() {
     tree->addChild(current());
     next();
 
-    auto is_varDec = [](Token* a) {
+    auto is_varDec = [](ParseTree* a) {
         if (a->getType() == "keyword") {
             if (a->getValue() == "static" || "field") {
                 return true;
@@ -52,7 +52,7 @@ ParseTree* CompilerParser::compileClass() {
         return false;
     };
 
-    auto is_subRoutine = [](Token* a) {
+    auto is_subRoutine = [](ParseTree* a) {
         if (a->getType() == "keyword") {
             if (a->getValue() == "function" || "method" || "constructor") {
                 return true;
@@ -154,7 +154,7 @@ ParseTree* CompilerParser::compileParameterList() {
     tree->addChild(current());
     next();
 
-    auto isBracket = [](Token* a) {
+    auto isBracket = [](ParseTree* a) {
         if (a->getType() == "symbol") {
             if (a->getValue() == ")") {
                 return true;
@@ -163,7 +163,7 @@ ParseTree* CompilerParser::compileParameterList() {
         return false;
     };
 
-    auto *currentValue = current();
+    ParseTree *currentValue = current();
     while (isBracket(currentValue) == false) {
         tree->addChild(current());
         next();
