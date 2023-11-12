@@ -193,7 +193,7 @@ ParseTree* CompilerParser::compileParameterList() {
 		currentVal = current();
     }
 
-    return tree
+    return tree;
 }
 
 
