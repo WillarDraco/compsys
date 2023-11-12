@@ -7,7 +7,7 @@
  */
 CompilerParser::CompilerParser(std::list<Token*> tokens) {
     std::list<Token*> tlist = tokens;
-    this->it = tlist.begin();
+    it = tlist.begin();
 }
 
 /**
