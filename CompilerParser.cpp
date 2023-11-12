@@ -151,8 +151,6 @@ ParseTree* CompilerParser::compileSubroutine() {
  */
 ParseTree* CompilerParser::compileParameterList() {
     ParseTree *tree = new ParseTree("parameterList", "");
-    tree->addChild(current());
-    next();
 
     auto isBracket = [](ParseTree* a) {
         if (a->getType() == "symbol") {
