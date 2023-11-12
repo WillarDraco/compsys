@@ -161,11 +161,10 @@ ParseTree* CompilerParser::compileParameterList() {
     //     return false;
     // };
 
-    ParseTree *currentValue = current();
-    while (currentValue->getValue() != ")") {
+    // ParseTree *currentValue = current();
+    while (current()->getValue() != ")") {
         tree->addChild(current());
         next();
-        currentValue  = current();
     }
 
     return tree;
