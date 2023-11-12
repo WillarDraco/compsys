@@ -328,8 +328,7 @@ void CompilerParser::next(){
  * @return the Token
  */
 Token* CompilerParser::current(){
-    auto current = *it;
-    return current;
+    return *it;
 }
 
 /**
