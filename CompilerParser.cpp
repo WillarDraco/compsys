@@ -17,7 +17,7 @@ CompilerParser::CompilerParser(std::list<Token*> tokens) {
  */
 ParseTree* CompilerParser::compileProgram() {
     if (current()->getValue() == "class") {
-        it++;
+        next();
         if (current()->getValue() == "Main" || current()->getValue() == "main") {
             it--;
             return compileClass();
@@ -191,7 +191,7 @@ ParseTree* CompilerParser::compileParameterList() {
     };
 
     Token *currentValue = current();
-    while (currentValue != nullptr && isBracket(currentValue) == false) {
+    while (currentValue != nullptr && !isBracket(currentValue)) {
         tree->addChild(current());
         next();
         currentValue = current();
