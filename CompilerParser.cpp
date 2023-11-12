@@ -330,6 +330,8 @@ ParseTree* CompilerParser::compileExpressionList() {
 void CompilerParser::next(){
     if (it != tlist.end()) {
         ++it;
+    } else {
+        throw ParseException{};
     }
     return;
 }
@@ -347,7 +349,7 @@ Token* CompilerParser::current(){
  * @return true if a match, false otherwise
  */
 bool CompilerParser::have(std::string expectedType, std::string expectedValue){
-    if (current()->getType() == expectedType && current()->getValue() == expectedValue) {
+    if (it != tlist.end() && current()->getType() == expectedType && current()->getValue() == expectedValue) {
         return true;
     } else {
         throw ParseException();
