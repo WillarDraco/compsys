@@ -32,12 +32,8 @@ ParseTree* CompilerParser::compileProgram() {
  */
 ParseTree* CompilerParser::compileClass() {
     ParseTree *tree = new ParseTree("class", "");
-    if (current()->getValue() != "class") {
-        throw ParseException();
-    }
 
-    tree->addChild(current());
-    next();
+    tree->addChild(mustBe("keyword", "class"));
     tree->addChild(current());
     next();
     tree->addChild(current());
@@ -100,8 +96,15 @@ ParseTree* CompilerParser::compileClass() {
  */
 ParseTree* CompilerParser::compileClassVarDec() {
     ParseTree *tree = new ParseTree("classVarDec", "");
-    tree->addChild(current());
-    next();
+    
+    if (current()->getValue() == "field") {
+        tree->addChild(mustBe("keyword", "field"));
+    } else if (current()->getValue() == "static") {
+        tree->addChild(mustBe("keyword", "static"));
+    } else {
+        throw ParseException();
+    }
+
     tree->addChild(current());
     next();
     tree->addChild(current());
@@ -121,14 +124,13 @@ ParseTree* CompilerParser::compileClassVarDec() {
 
     ParseTree *currentValue = current();
     while (isComma(currentValue) == true) {
-        tree->addChild(current());
-        next();
+        tree->addChild(mustBe("symbol", ","));
         tree->addChild(current());
         next();
         currentValue  = current();
     }
+    tree->addChild(mustBe("symbol", ";"));
 
-    tree->addChild(current());
     return tree;
 }
 
@@ -138,8 +140,17 @@ ParseTree* CompilerParser::compileClassVarDec() {
  */
 ParseTree* CompilerParser::compileSubroutine() {
     ParseTree *tree = new ParseTree("subroutine", "");
-    tree->addChild(current());
-    next();
+    
+    if (current()->getValue() == "function") {
+        tree->addChild(mustBe("keyword", "function"));
+    } else if (current()->getValue() == "method") {
+        tree->addChild(mustBe("keyword", "method"));
+    } else if (current()->getValue() == "constructor") {
+        tree->addChild(mustBe("keyword", "constructor"));
+    } else {
+        throw ParseException();
+    }
+
     tree->addChild(current());
     next();
     tree->addChild(current());
@@ -214,6 +225,8 @@ ParseTree* CompilerParser::compileSubroutineBody() {
         currentValue  = current();
     }
 
+    tree->addChild(mustBe("symbol", "}"));
+
     return tree;
 
 }
@@ -223,8 +236,13 @@ ParseTree* CompilerParser::compileSubroutineBody() {
  */
 ParseTree* CompilerParser::compileVarDec() {
     ParseTree *tree = new ParseTree("varDec", "");
-    tree->addChild(current());
-    next();
+    if (current()->getType() == "var") {
+        tree->addChild(current());
+        next();
+    } else {
+        throw ParseException();
+    }
+    
     tree->addChild(current());
     next();
     tree->addChild(current());
@@ -248,7 +266,7 @@ ParseTree* CompilerParser::compileVarDec() {
         currentValue  = current();
     }
 
-    tree->addChild(current());
+    tree->addChild(mustBe("symbol", ";"));
     return tree;
 }
 
