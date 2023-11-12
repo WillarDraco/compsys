@@ -175,29 +175,30 @@ ParseTree* CompilerParser::compileSubroutine() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileParameterList() {
-    ParseTree *tree = new ParseTree("parameterList", "");
+    // ParseTree *tree = new ParseTree("parameterList", "");
 
-    auto isBracket = [](ParseTree* a) {
-        if (a == nullptr) {
-            return true;
-        }
+    // auto isBracket = [](ParseTree* a) {
+    //     if (a == nullptr) {
+    //         return true;
+    //     }
 
-        if (a->getType() == "symbol") {
-            if (a->getValue() == ")") {
-                return true;
-            }
-        }
-        return false;
-    };
+    //     if (a->getType() == "symbol") {
+    //         if (a->getValue() == ")") {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // };
 
-    Token *currentValue = current();
-    while (currentValue != nullptr && !isBracket(currentValue)) {
-        tree->addChild(current());
-        next();
-        currentValue = current();
-    }
+    // Token *currentValue = current();
+    // while (currentValue != nullptr && !isBracket(currentValue)) {
+    //     tree->addChild(current());
+    //     next();
+    //     currentValue = current();
+    // }
 
-    return tree;
+    // return tree;
+    throw ParseException();
 }
 
 
@@ -206,32 +207,32 @@ ParseTree* CompilerParser::compileParameterList() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileSubroutineBody() {
-    ParseTree *tree = new ParseTree("subroutineBody", "");
-    tree->addChild(mustBe("symbol", "{"));
+    // ParseTree *tree = new ParseTree("subroutineBody", "");
+    // tree->addChild(mustBe("symbol", "{"));
 
-    auto isEnd = [](ParseTree* a) {
-        if (a->getType() == "symbol") {
-            if (a->getValue() == "}") {
-                return true;
-            }
-        }
-        return false;
-    };
+    // auto isEnd = [](ParseTree* a) {
+    //     if (a->getType() == "symbol") {
+    //         if (a->getValue() == "}") {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // };
 
-    ParseTree *currentValue = current();
-    while (isEnd(currentValue) == false) {
-        if (currentValue->getType() == "keyword" && currentValue->getValue() == "var") {
-            tree->addChild(compileVarDec());
-        } else {
-            tree->addChild(compileStatements());
-        }
-        currentValue  = current();
-    }
+    // ParseTree *currentValue = current();
+    // while (isEnd(currentValue) == false) {
+    //     if (currentValue->getType() == "keyword" && currentValue->getValue() == "var") {
+    //         tree->addChild(compileVarDec());
+    //     } else {
+    //         tree->addChild(compileStatements());
+    //     }
+    //     currentValue  = current();
+    // }
 
-    tree->addChild(mustBe("symbol", "}"));
+    // tree->addChild(mustBe("symbol", "}"));
 
-    return tree;
-
+    // return tree;
+    throw ParseException();
 }
 /**
  * Generates a parse tree for a subroutine variable declaration
@@ -375,7 +376,6 @@ bool CompilerParser::have(std::string expectedType, std::string expectedValue){
     } else {
         throw ParseException();
     }
-    return NULL;
 }
 
 /**
