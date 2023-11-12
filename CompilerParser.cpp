@@ -44,6 +44,9 @@ ParseTree* CompilerParser::compileClass() {
     next();
 
     auto is_varDec = [](ParseTree* a) {
+        if (a == nullptr) {
+            return true;
+        }
         if (a->getType() == "keyword") {
             if (a->getValue() == "static" || "field") {
                 return true;
@@ -53,6 +56,9 @@ ParseTree* CompilerParser::compileClass() {
     };
 
     auto is_subRoutine = [](ParseTree* a) {
+        if (a == nullptr) {
+            return true;
+        }
         if (a->getType() == "keyword") {
             if (a->getValue() == "function" || "method" || "constructor") {
                 return true;
@@ -62,6 +68,9 @@ ParseTree* CompilerParser::compileClass() {
     };
 
     auto is_end = [](ParseTree* a) {
+        if (a == nullptr) {
+            return true;
+        }
         if (a->getType() == "symbol") {
             if (a->getValue() == "}") {
                 return true;
@@ -99,6 +108,9 @@ ParseTree* CompilerParser::compileClassVarDec() {
     next();
 
     auto isComma = [](ParseTree* a) {
+        if (a == nullptr) {
+            return true;
+        }
         if (a->getType() == "symbol") {
             if (a->getValue() == ",") {
                 return true;
