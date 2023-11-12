@@ -179,7 +179,7 @@ ParseTree* CompilerParser::compileParameterList() {
 
     auto isBracket = [](ParseTree* a) {
         if (a == nullptr) {
-            return false;  // Change to false to avoid an infinite loop
+            return false;
         }
 
         if (a->getType() == "symbol") {
