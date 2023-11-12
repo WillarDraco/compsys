@@ -179,7 +179,7 @@ ParseTree* CompilerParser::compileParameterList() {
 
     auto isBracket = [](ParseTree* a) {
         if (a == nullptr) {
-            return true;
+            return false;  // Change to false to avoid an infinite loop
         }
 
         if (a->getType() == "symbol") {
@@ -194,7 +194,7 @@ ParseTree* CompilerParser::compileParameterList() {
     while (currentValue != nullptr && isBracket(currentValue) == false) {
         tree->addChild(current());
         next();
-        currentValue  = current();
+        currentValue = current();
     }
 
     return tree;
