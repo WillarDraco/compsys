@@ -1,11 +1,13 @@
 #include "CompilerParser.h"
-
+#include <string>
 
 /**
  * Constructor for the CompilerParser
  * @param tokens A linked list of tokens to be parsed
  */
 CompilerParser::CompilerParser(std::list<Token*> tokens) {
+    std::list<Token*> tlist = tokens;
+    this->it = tlist.begin();
 }
 
 /**
@@ -13,6 +15,13 @@ CompilerParser::CompilerParser(std::list<Token*> tokens) {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileProgram() {
+    if (current()->getValue() == "class") {
+        if (current()->getValue() == "class") {
+            return compileClass();
+        }
+    } else {
+        throw ParseException();
+    }
     return NULL;
 }
 
@@ -21,7 +30,60 @@ ParseTree* CompilerParser::compileProgram() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileClass() {
-    return NULL;
+    ParseTree *tree = new ParseTree("class", "");
+    if (current()->getValue() != "class") {
+        throw ParseException();
+    }
+
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+
+    auto is_varDec = [](ParseTree* a) {
+        if (a->getType() == "keyword") {
+            if (a->getValue() == "static" || "field") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    auto is_subRoutine = [](ParseTree* a) {
+        if (a->getType() == "keyword") {
+            if (a->getValue() == "function" || "method" || "constructor") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    auto is_end = [](ParseTree* a) {
+        if (a->getType() == "symbol") {
+            if (a->getValue() == "}") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    do {
+        auto currentToken = current();
+        if (is_varDec(currentToken) == true) {
+            tree->addChild(compileClassVarDec());
+            it++;
+        } else if (is_subRoutine(currentToken) == true) {
+            tree->addChild(compileSubroutine());
+            it++;
+        } else {
+            tree->addChild(current());
+            it++;
+        } 
+    } while (is_end(tree->getChildren().back()) == false);
+    
+    return tree;
 }
 
 /**
@@ -29,7 +91,34 @@ ParseTree* CompilerParser::compileClass() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileClassVarDec() {
-    return NULL;
+    ParseTree *tree = new ParseTree("classVarDec", "");
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+
+    auto isComma = [](ParseTree* a) {
+        if (a->getType() == "symbol") {
+            if (a->getValue() == ",") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    ParseTree *currentValue = current();
+    while (isComma(currentValue) == true) {
+        tree->addChild(current());
+        next();
+        tree->addChild(current());
+        next();
+        currentValue  = current();
+    }
+
+    tree->addChild(current());
+    return tree;
 }
 
 /**
@@ -37,7 +126,24 @@ ParseTree* CompilerParser::compileClassVarDec() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileSubroutine() {
-    return NULL;
+    ParseTree *tree = new ParseTree("subroutine", "");
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+
+    tree->addChild(compileParameterList());
+
+    tree->addChild(current());
+    next();
+    
+    tree->addChild(compileSubroutineBody());
+    
+    return tree;
 }
 
 /**
@@ -45,7 +151,27 @@ ParseTree* CompilerParser::compileSubroutine() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileParameterList() {
-    return NULL;
+    ParseTree *tree = new ParseTree("parameterList", "");
+    tree->addChild(current());
+    next();
+
+    auto isBracket = [](ParseTree* a) {
+        if (a->getType() == "symbol") {
+            if (a->getValue() == ")") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    ParseTree *currentValue = current();
+    while (isBracket(currentValue) == false) {
+        tree->addChild(current());
+        next();
+        currentValue  = current();
+    }
+
+    return tree;
 }
 
 /**
@@ -53,15 +179,68 @@ ParseTree* CompilerParser::compileParameterList() {
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileSubroutineBody() {
-    return NULL;
-}
+    ParseTree *tree = new ParseTree("subroutineBody", "");
+    tree->addChild(current());
+    next();
 
+    auto isEnd = [](ParseTree* a) {
+        if (a->getType() == "symbol") {
+            if (a->getValue() == "}") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    ParseTree *currentValue = current();
+    while (isEnd(currentValue) == false) {
+        if (currentValue->getType() == "keyword" && currentValue->getValue() == "var") {
+            tree->addChild(compileVarDec());
+            next();
+        } else {
+            tree->addChild(compileStatements());
+            next();
+            
+        }
+        currentValue  = current();
+    }
+
+    return tree;
+
+}
 /**
  * Generates a parse tree for a subroutine variable declaration
  * @return a ParseTree
  */
 ParseTree* CompilerParser::compileVarDec() {
-    return NULL;
+    ParseTree *tree = new ParseTree("varDec", "");
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+    tree->addChild(current());
+    next();
+
+    auto isComma = [](ParseTree* a) {
+        if (a->getType() == "symbol") {
+            if (a->getValue() == ",") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    ParseTree *currentValue = current();
+    while (isComma(currentValue) == true) {
+        tree->addChild(current());
+        next();
+        tree->addChild(current());
+        next();
+        currentValue  = current();
+    }
+
+    tree->addChild(current());
+    return tree;
 }
 
 /**
@@ -140,6 +319,7 @@ ParseTree* CompilerParser::compileExpressionList() {
  * Advance to the next token
  */
 void CompilerParser::next(){
+    it++;
     return;
 }
 
@@ -148,7 +328,8 @@ void CompilerParser::next(){
  * @return the Token
  */
 Token* CompilerParser::current(){
-    return NULL;
+    auto current = *it;
+    return current;
 }
 
 /**
@@ -156,7 +337,12 @@ Token* CompilerParser::current(){
  * @return true if a match, false otherwise
  */
 bool CompilerParser::have(std::string expectedType, std::string expectedValue){
-    return false;
+    if (current()->getType() == expectedType && current()->getValue() == expectedValue) {
+        return true;
+    } else {
+        throw ParseException();
+    }
+    return NULL;
 }
 
 /**
@@ -165,7 +351,14 @@ bool CompilerParser::have(std::string expectedType, std::string expectedValue){
  * @return the current token before advancing
  */
 Token* CompilerParser::mustBe(std::string expectedType, std::string expectedValue){
-    return NULL;
+    if (have(expectedType, expectedValue) == true) {
+        auto current = *it;
+        it++;
+        return current;
+    } else {
+        throw ParseException();
+    }
+    throw ParseException();
 }
 
 /**
