@@ -315,7 +315,9 @@ ParseTree* CompilerParser::compileExpressionList() {
  * Advance to the next token
  */
 void CompilerParser::next(){
-    it++;
+    if (it != tlist.end()) {
+        ++it;
+    }
     return;
 }
 
