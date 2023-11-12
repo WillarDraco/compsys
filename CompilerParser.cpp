@@ -1,5 +1,6 @@
 #include "CompilerParser.h"
 #include <string>
+#include <list>
 
 /**
  * Constructor for the CompilerParser
@@ -73,14 +74,12 @@ ParseTree* CompilerParser::compileClass() {
         auto currentToken = current();
         if (is_varDec(currentToken) == true) {
             tree->addChild(compileClassVarDec());
-            it++;
         } else if (is_subRoutine(currentToken) == true) {
             tree->addChild(compileSubroutine());
-            it++;
         } else {
             tree->addChild(current());
-            it++;
-        } 
+            next();
+        }
     } while (is_end(tree->getChildren().back()) == false);
     
     return tree;
@@ -196,11 +195,8 @@ ParseTree* CompilerParser::compileSubroutineBody() {
     while (isEnd(currentValue) == false) {
         if (currentValue->getType() == "keyword" && currentValue->getValue() == "var") {
             tree->addChild(compileVarDec());
-            next();
         } else {
             tree->addChild(compileStatements());
-            next();
-            
         }
         currentValue  = current();
     }
