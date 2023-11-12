@@ -7,7 +7,7 @@
  * @param tokens A linked list of tokens to be parsed
  */
 CompilerParser::CompilerParser(std::list<Token*> tokens) {
-    auto tlist = tokens;
+    std::list<Token*> tlist (tokens);
     it = tlist.begin();
 }
 
