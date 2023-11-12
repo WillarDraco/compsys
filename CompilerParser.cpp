@@ -154,7 +154,7 @@ ParseTree* CompilerParser::compileParameterList() {
     tree->addChild(current());
     next();
 
-    auto isBracket = [](ParseTree* a) {
+    auto isBracket = [](Token* a) {
         if (a->getType() == "symbol") {
             if (a->getValue() == ")") {
                 return true;
@@ -163,7 +163,7 @@ ParseTree* CompilerParser::compileParameterList() {
         return false;
     };
 
-    ParseTree *currentValue = current();
+    auto *currentValue = current();
     while (isBracket(currentValue) == false) {
         tree->addChild(current());
         next();
