@@ -17,7 +17,7 @@ CompilerParser::CompilerParser(std::list<Token*> tokens) {
  */
 ParseTree* CompilerParser::compileProgram() {
     if (current()->getValue() == "class") {
-        next();
+        it++;
         if (current()->getValue() == "Main" || current()->getValue() == "main") {
             it--;
             return compileClass();
@@ -191,14 +191,15 @@ ParseTree* CompilerParser::compileParameterList() {
     };
 
     Token *currentValue = current();
-    while (currentValue == nullptr && !isBracket(currentValue)) {
+    while (currentValue != nullptr && !isBracket(currentValue)) {
         tree->addChild(current());
         next();
-        currentValue  = current();
+        currentValue = current();
     }
 
     return tree;
 }
+
 
 /**
  * Generates a parse tree for a subroutine's body
