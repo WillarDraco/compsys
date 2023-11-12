@@ -179,18 +179,14 @@ ParseTree* CompilerParser::compileParameterList() {
 
     auto isBracket = [](ParseTree* a) {
         if (a == nullptr) {
-            return false;
+            return true;
         }
 
-        if (a != nullptr) {
-            if (a->getType() == "symbol") {
-                if (a->getValue() == ")") {
-                    return true;
-                }
+        if (a->getType() == "symbol") {
+            if (a->getValue() == ")") {
+                return true;
             }
         }
-
-        
         return false;
     };
 
