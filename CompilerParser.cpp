@@ -45,10 +45,10 @@ ParseTree* CompilerParser::compileClass() {
 
     auto is_varDec = [](ParseTree* a) {
         if (a == nullptr) {
-            return true;
+            return false;
         }
         if (a->getType() == "keyword") {
-            if (a->getValue() == "static" || "field") {
+            if (a->getValue() == "static" || a->getValue() == "field") {
                 return true;
             }
         }
@@ -57,10 +57,10 @@ ParseTree* CompilerParser::compileClass() {
 
     auto is_subRoutine = [](ParseTree* a) {
         if (a == nullptr) {
-            return true;
+            return false;
         }
         if (a->getType() == "keyword") {
-            if (a->getValue() == "function" || "method" || "constructor") {
+            if (a->getValue() == "function" || a->getValue() == "method" ||  a->getValue() == "constructor") {
                 return true;
             }
         }
@@ -178,7 +178,7 @@ ParseTree* CompilerParser::compileParameterList() {
     };
 
     Token *currentValue = current();
-    while (!isBracket(currentValue)) {
+    while (currentValue == nullptr && !isBracket(currentValue)) {
         tree->addChild(current());
         next();
         currentValue  = current();
